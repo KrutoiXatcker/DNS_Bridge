@@ -1,18 +1,20 @@
 #ifndef DNS_TR_C_H
 #define DNS_TR_C_H
 
-#include <iostream>
-#include <cstring>
-#include <stdexcept>
+#include <unordered_map>
 #include <arpa/inet.h>
+#include <stdexcept>
+#include <iostream>
 #include <unistd.h>
+#include <cstring>
+#include <fstream>
 #include <vector>
 #include <string>
-#include <fstream>
-#include <unordered_map>
 #include <sstream>
 
+
 class DNS_TR_C {
+
 private:
     // Структура DNS-заголовка
     struct DNSHeader {
@@ -24,17 +26,18 @@ private:
         uint16_t arcount;
     };
 
-    int sock;                   // Сокет для UDP-соединения
-    sockaddr_in server_addr;    // Адрес DNS-сервера
-    std::vector<uint8_t> response; // Буфер для ответа
-    std::string domain;         // Доменное имя для запроса
-    std::string server_ip;      // IP DNS-сервера
-    std::vector<uint8_t> query; // DNS-запрос
+    int sock;                       // Сокет для UDP-соединения
+    sockaddr_in server_addr;        // Адрес DNS-сервера
+    std::vector<uint8_t> response;  // Буфер для ответа
+    std::string domain;             // Доменное имя для запроса
+    std::string server_ip;          // IP DNS-сервера
+    std::vector<uint8_t> query;     // DNS-запрос
 
 
 public:
-    // Конструктор
-    DNS_TR_C();
+
+    //  Конструктор принимает адрес DNS сервера
+    DNS_TR_C(std::string server_IP);
 
     // Деструктор
     ~DNS_TR_C();

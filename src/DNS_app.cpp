@@ -1,14 +1,14 @@
 #include "DNS_app.h"
 
 DNS_app::DNS_app(){
-    bayt_cripted("domane _p.txt");
+    bayt_cripted("domane _p.txt"); // Название файла с нумерованими IP
 }
 
 DNS_app::~DNS_app(){
 
 }
 
-// Загрузка базы данных доменов из файла
+// Загрузка базы данных доменов из файла в в хеш-таблицу
 void DNS_app::bayt_cripted(const std::string& filename) {
     std::ifstream file(filename);
     std::string line;
@@ -21,9 +21,14 @@ void DNS_app::bayt_cripted(const std::string& filename) {
     }
 }
 
+
+/* Функция считывает один байт из бинарного файла,
+  использует его как ключ для поиска в хеш-таблице,
+  и отправляет запрос на домен, соответствующий найденному значению. */
+
 void DNS_app::start_tr(std::string filename){
     std::ifstream file(filename, std::ios::binary);
-    DNS_TR_C send;
+    DNS_TR_C send(Server_IP);
     // Проверяем, удалось ли открыть файл
     if (!file.is_open()) {
         std::cerr << "Не удалось открыть файл!" << std::endl;
@@ -41,7 +46,6 @@ void DNS_app::start_tr(std::string filename){
         send.setDomain(hostnames[std::to_string(static_cast<int>(static_cast<unsigned char>(byte)))]);
         send.send_query();
         //send.resive_query();
-       
     }
 
     send.setDomain(hostnames["257"]);

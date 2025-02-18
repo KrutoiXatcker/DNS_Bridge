@@ -2,13 +2,9 @@
 #include "DNS_TR_C.h"
 #include "DNS_app.h"
 
-int main() {
-    DNS_TR_C dns_client;
-    DNS_app x;
-    x.start_tr("111");
-    
-    /*
+void DNS_TxRx(DNS_TR_C& dns_client){
     for(;;){
+        
         std::string domain_name;
         std::cin>>domain_name;
         dns_client.setDomain(domain_name);
@@ -27,7 +23,14 @@ int main() {
             std::cerr << "Error: " << e.what() << std::endl;
         }
     }
-    */
+}
+
+int main() {
+    DNS_TR_C dns_client("1.1.1.1");
+    //DNS_app x;
+    //x.start_tr("111");
+
+    DNS_TxRx(dns_client);
 
     return 0;
 }

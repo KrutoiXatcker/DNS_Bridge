@@ -1,11 +1,11 @@
 #include "DNS_TR_C.h"
 
-// Конструктор
-DNS_TR_C::DNS_TR_C()
-    : domain("google.com"),
-      server_ip("192.168.1.7"),
-      //server_ip("8.8.8.8"),
-      sock(socket(AF_INET, SOCK_DGRAM, 0)) {
+
+DNS_TR_C::DNS_TR_C(std::string server_IP): 
+                            domain(server_IP),
+                            server_ip(server_IP),
+                            sock(socket(AF_INET, SOCK_DGRAM, 0))
+{
     if (sock < 0) {
         throw std::runtime_error("Failed to create socket");
     }
@@ -20,12 +20,14 @@ DNS_TR_C::DNS_TR_C()
     query = build_dns_query(domain);
 }
 
+
 // Деструктор
 DNS_TR_C::~DNS_TR_C() {
     if (sock >= 0) {
         close(sock);
     }
 }
+
 
 // Формирование DNS-запроса
 std::vector<uint8_t> DNS_TR_C::build_dns_query(const std::string& domain) {
@@ -66,6 +68,7 @@ std::vector<uint8_t> DNS_TR_C::build_dns_query(const std::string& domain) {
 
     return packet;
 }
+
 
 // Разбор DNS-ответа
 std::string DNS_TR_C::parse_dns_response(const std::vector<uint8_t>& response) {
@@ -119,6 +122,8 @@ std::string DNS_TR_C::parse_dns_response(const std::vector<uint8_t>& response) {
 
     throw std::runtime_error("No supported DNS record type found");
 }
+
+
 // Отправка DNS-запроса
 void DNS_TR_C::send_query() {
     if (sendto(sock, query.data(), query.size(), 0,
@@ -126,6 +131,7 @@ void DNS_TR_C::send_query() {
         throw std::runtime_error("Failed to send DNS query");
     }
 }
+
 
 // Получение DNS-ответа
 void DNS_TR_C::resive_query() {
@@ -139,15 +145,18 @@ void DNS_TR_C::resive_query() {
     response.resize(len);
 }
 
+
 // Геттер для доменного имени
 std::string DNS_TR_C::getDomain() const {
     return domain;
 }
 
+
 // Геттер для ответа (response)
 std::vector<uint8_t> DNS_TR_C::getResponse() const {
     return response;
 }
+
 
 // Сеттер для доменого имени 
 void DNS_TR_C::setDomain(std::string domain_buf) {

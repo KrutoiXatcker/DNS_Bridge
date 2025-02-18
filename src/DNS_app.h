@@ -1,18 +1,19 @@
 #ifndef DNS_app_
 #define DNS_app_
 
-
-#include <iostream>
-#include <cstring>
-#include <stdexcept>
+#include <unordered_map>
 #include <arpa/inet.h>
+#include <stdexcept>
+#include <iostream>
 #include <unistd.h>
+#include <cstring>
+#include <fstream>
+#include <sstream>
 #include <vector>
 #include <string>
-#include <fstream>
-#include <unordered_map>
-#include <sstream>
 #include "DNS_TR_C.h"
+
+
 
 class DNS_app{
 
@@ -25,6 +26,8 @@ public:
     void start_tr(std::string filename);
 
 private:
+
+    std::string Server_IP  = "127.0.0.1";
 
     // База данных доменов и IP-адресов
     std::unordered_map<std::string, std::string> hostnames;
