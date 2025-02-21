@@ -1,7 +1,10 @@
 #include "DNS_app.h"
+#include <chrono>
 
-DNS_app::DNS_app(){
-    bayt_cripted("domane _p.txt"); // Название файла с нумерованими IP
+DNS_app::DNS_app(std::string server_ip):    Server_IP(server_ip),
+                                            db_name("test.txt")
+{
+    bayt_cripted(db_name); // Название файла с нумерованими IP
 }
 
 DNS_app::~DNS_app(){
@@ -45,7 +48,8 @@ void DNS_app::start_tr(std::string filename){
         // Выводим байт в виде целого числа
         send.setDomain(hostnames[std::to_string(static_cast<int>(static_cast<unsigned char>(byte)))]);
         send.send_query();
-        //send.resive_query();
+        send.resive_query();
+        //std::chrono::microseconds t(10);
     }
 
     send.setDomain(hostnames["257"]);
@@ -55,4 +59,9 @@ void DNS_app::start_tr(std::string filename){
     file.close();
     
     return;
+}
+
+
+void setServer_IP(const std::string& server_ip){
+    std::string Server_IP = server_ip;
 }

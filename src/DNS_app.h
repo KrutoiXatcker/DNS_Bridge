@@ -14,20 +14,24 @@
 #include "DNS_TR_C.h"
 
 
-
 class DNS_app{
 
 public:
     
-    DNS_app();
+    DNS_app(std::string server_ip);
 
     ~DNS_app();
 
-    void start_tr(std::string filename);
+    void setServer_IP(const std::string& server_ip);
+
+    void start_tr(const std::string filename);
 
 private:
+    // IP - адресс сервера
+    std::string Server_IP = "127.0.0.1";
 
-    std::string Server_IP  = "127.0.0.1";
+    //  Имя базы данных
+    std::string db_name;
 
     // База данных доменов и IP-адресов
     std::unordered_map<std::string, std::string> hostnames;

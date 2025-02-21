@@ -25,11 +25,12 @@ void DNS_TxRx(DNS_TR_C& dns_client){
     }
 }
 
-int main() {
-    DNS_TR_C dns_client("1.1.1.1");
-    //DNS_app x;
-    //x.start_tr("111");
 
+int main(int argc,char *argv[]) {
+    DNS_TR_C dns_client("1.1.1.1");
+    DNS_app x("127.0.0.1");
+    //std::cout<<argv[1];
+    //x.start_tr(argv[1]);
     DNS_TxRx(dns_client);
 
     return 0;
